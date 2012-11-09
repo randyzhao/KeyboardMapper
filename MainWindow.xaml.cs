@@ -34,15 +34,24 @@ namespace KeyboardMapper
 
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            this.kh.AddMappingPair(0, 65);
-            this.kh.AddMappingPair(2, 66);
-            this.kh.AddMappingPair(3, 67);
+            this.kh.AddMappingPair(68, 65);
+            this.kh.AddMappingPair(69, 66);
+            this.kh.AddMappingPair(70, 67);
         }
 
-     
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.kh.MappingOn = true;
+        }
+
+        private void stopButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.kh.MappingOn = false;
+        }
     }
+#region Converters
     [ValueConversion(typeof(Int32), typeof(String))]
     public class KeyNameConverter : IValueConverter
     {
@@ -58,4 +67,6 @@ namespace KeyboardMapper
             return null;
         }
     }
+
+#endregion
 }

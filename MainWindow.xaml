@@ -3,22 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:KeyboardMapper"
 
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="372" Width="525" ResizeMode="CanMinimize">
     <Window.Resources>
         <my:KeyNameConverter x:Key="keyNameConverter"></my:KeyNameConverter>
     </Window.Resources>
-    <Grid>
-        <ListView  ItemsSource="{Binding MappingPairs}" 
-                  Margin="0,0,0,43" Name="mappingPairListView">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="原始按键" Width ="100" 
-                                    DisplayMemberBinding="{Binding OriginalVkCode, Converter={StaticResource keyNameConverter}}" />
-                    <GridViewColumn Header="映射按键" Width ="100" 
-                                    DisplayMemberBinding="{Binding MappingVkCode, Converter={StaticResource keyNameConverter}}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="24,276,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+    <Grid Height="326" Width="509">
+        <Grid Height="226" HorizontalAlignment="Left" Margin="24,12,0,0" Name="grid1" VerticalAlignment="Top" Width="467">
+            <ListView ItemsSource="{Binding MappingPairs}" Margin="6,0,6,6" Name="mappingPairListView">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="原始按键" Width="100" DisplayMemberBinding="{Binding OriginalVkCode, Converter={StaticResource keyNameConverter}}" />
+                        <GridViewColumn Header="原始键值" Width="100" DisplayMemberBinding="{Binding OriginalVkCode}" />
+                        <GridViewColumn Header="映射按键" Width="100" DisplayMemberBinding="{Binding MappingVkCode, Converter={StaticResource keyNameConverter}}" />
+                        <GridViewColumn Header="映射键值" Width="100" DisplayMemberBinding="{Binding MappingVkCode}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button Content="添加映射" Height="23" HorizontalAlignment="Left" Margin="14,182,0,0" Name="addButton" VerticalAlignment="Top" Width="61" Click="addButton_Click" />
+            <Button Content="编辑映射" Height="23" HorizontalAlignment="Left" Margin="96,182,0,0" Name="editButton" VerticalAlignment="Top" Width="61" />
+            <Button Content="删除映射" Height="23" HorizontalAlignment="Left" Margin="304,182,0,0" Name="deleteButton" VerticalAlignment="Top" Width="61" />
+            <Button Content="清空映射" Height="23" HorizontalAlignment="Right" Margin="0,182,21,0" Name="clearButton" VerticalAlignment="Top" Width="61" />
+        </Grid>
+        <Button Content="导入" Height="23" HorizontalAlignment="Left" Margin="38,253,0,0" Name="importButton" VerticalAlignment="Top" Width="61" />
+        <Button Content="导出" Height="23" HorizontalAlignment="Left" Margin="120,253,0,0" Name="exportButton" VerticalAlignment="Top" Width="61" />
+        <Button Content="开始" Height="23" HorizontalAlignment="Left" Margin="328,253,0,0" Name="startButton" VerticalAlignment="Top" Width="61" Click="startButton_Click" />
+        <Button Content="停止" Height="23" HorizontalAlignment="Left" Margin="409,253,0,0" Name="stopButton" VerticalAlignment="Top" Width="61" Click="stopButton_Click" />
+        <StatusBar Height="23" HorizontalAlignment="Left" Margin="0,303,0,0" Name="statusBar1" VerticalAlignment="Top" Width="506" />
     </Grid>
 </Window>
