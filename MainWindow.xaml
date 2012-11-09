@@ -1,0 +1,15 @@
+﻿<Window x:Class="KeyboardMapper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <ListView ItemsSource="{Binding MappingPairs}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="原始按键" Width ="100" DisplayMemberBinding="{Binding [0]}" />
+                    <GridViewColumn Header="映射按键" Width ="100" DisplayMemberBinding="{Binding [1]}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
