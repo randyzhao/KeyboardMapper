@@ -19,6 +19,7 @@ namespace KeyboardMapper
     /// </summary>
     public partial class MainWindow : Window
     {
+        private KeyboardHooker kh = new KeyboardHooker();
         public void handleHookEvent(string msg)
         {
             MessageBox.Show(msg);
@@ -27,8 +28,16 @@ namespace KeyboardMapper
         public MainWindow()
         {
             InitializeComponent();
-            KeyboardHooker kh = new KeyboardHooker();
             kh.HookEvent += new KeyboardHooker.HookEventHandler(this.handleHookEvent);
+            this.mappingPairListView.DataContext = kh;
+           
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            this.kh.AddMappingPair(0, 1);
+            this.kh.AddMappingPair(2, 1);
+            this.kh.AddMappingPair(3, 1);
         }
 
     }
