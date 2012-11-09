@@ -125,9 +125,9 @@ namespace KeyboardMapper
 
         private IntPtr HookCallback(int nCode, IntPtr wParam, ref KBDLLHOOKSTRUCT lParam)
         {
-            if (this.MappingOn && nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN))
+            if (this.MappingOn && nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN) && this.mappingDict.ContainsKey(lParam.vkCode))
             {
-                keybd_event((byte)lParam.vkCode, (byte)lParam.scanCode, 0, lParam.dwExtraInfo);
+                keybd_event((byte)this.mappingDict[lParam.vkCode], (byte)lParam.scanCode, 0, lParam.dwExtraInfo);
                 return (IntPtr)1;
             }
             else
@@ -135,6 +135,8 @@ namespace KeyboardMapper
                 return CallNextHookEx(hookID, nCode, wParam, ref lParam);
             }
         }
+
+    
 
         public KeyboardHooker()
         {
