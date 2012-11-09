@@ -2,14 +2,20 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:KeyboardMapper"
+
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <my:KeyNameConverter x:Key="keyNameConverter"></my:KeyNameConverter>
+    </Window.Resources>
     <Grid>
         <ListView  ItemsSource="{Binding MappingPairs}" 
                   Margin="0,0,0,43" Name="mappingPairListView">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="原始按键" Width ="100" DisplayMemberBinding="{Binding OriginalVkCode}" />
-                    <GridViewColumn Header="映射按键" Width ="100" DisplayMemberBinding="{Binding MappingVkCode}" />
+                    <GridViewColumn Header="原始按键" Width ="100" 
+                                    DisplayMemberBinding="{Binding OriginalVkCode, Converter={StaticResource keyNameConverter}}" />
+                    <GridViewColumn Header="映射按键" Width ="100" 
+                                    DisplayMemberBinding="{Binding MappingVkCode, Converter={StaticResource keyNameConverter}}" />
                 </GridView>
             </ListView.View>
         </ListView>

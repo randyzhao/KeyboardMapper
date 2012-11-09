@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace KeyboardMapper
 {
@@ -30,15 +31,31 @@ namespace KeyboardMapper
             InitializeComponent();
             kh.HookEvent += new KeyboardHooker.HookEventHandler(this.handleHookEvent);
             this.mappingPairListView.DataContext = kh;
-           
+
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            this.kh.AddMappingPair(0, 1);
-            this.kh.AddMappingPair(2, 1);
-            this.kh.AddMappingPair(3, 1);
+            this.kh.AddMappingPair(0, 65);
+            this.kh.AddMappingPair(2, 66);
+            this.kh.AddMappingPair(3, 67);
         }
 
+     
+    }
+    [ValueConversion(typeof(Int32), typeof(String))]
+    public class KeyNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+            object parameter, CultureInfo culture)
+        {
+            Key k = KeyInterop.KeyFromVirtualKey((int)value);
+            return k.ToString();
+        }
+        public object ConvertBack(object value, Type targetType,
+            object parameter, CultureInfo culture)
+        {
+            return null;
+        }
     }
 }
