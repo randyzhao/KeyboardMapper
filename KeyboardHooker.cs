@@ -132,7 +132,16 @@ namespace KeyboardMapper
         {
             get
             {
-                return this.mappingPairList;
+                List<MappingPairType> output = new List<MappingPairType>();
+                for (int i = 0; i < this.mappingPairList.Count; i++)
+                {
+                    output.Add(new MappingPairType
+                        {
+                            OriginalVkCode = this.mappingPairList[i].OriginalVkCode,
+                            MappingVkCode = this.mappingPairList[i].MappingVkCode 
+                        });
+                }
+                return output;
             }
         }
 

@@ -12,12 +12,12 @@
             <ListView ItemsSource="{Binding MappingPairs}" Margin="6,0,6,6" Name="mappingPairListView">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="原始按键" Width="100" DisplayMemberBinding="{Binding OriginalVkCode, 
+                        <GridViewColumn Header="原始按键" Width="100" DisplayMemberBinding="{Binding OriginalVkCode, Mode=OneWay,
                             Converter={StaticResource keyVkNameConverter}}" />
-                        <GridViewColumn Header="原始键值" Width="100" DisplayMemberBinding="{Binding OriginalVkCode}" />
-                        <GridViewColumn Header="映射按键" Width="100" DisplayMemberBinding="{Binding MappingVkCode,
+                        <GridViewColumn Header="原始键值" Width="100" DisplayMemberBinding="{Binding OriginalVkCode, Mode=OneWay}" />
+                        <GridViewColumn Header="映射按键" Width="100" DisplayMemberBinding="{Binding MappingVkCode, Mode=OneWay,
                             Converter={StaticResource keyVkNameConverter}}" />
-                        <GridViewColumn Header="映射键值" Width="100" DisplayMemberBinding="{Binding MappingVkCode}" />
+                        <GridViewColumn Header="映射键值" Width="100" DisplayMemberBinding="{Binding MappingVkCode, Mode=OneWay}" />
                     </GridView>
                 </ListView.View>
             </ListView>
