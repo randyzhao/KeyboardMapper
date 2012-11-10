@@ -106,18 +106,29 @@ namespace KeyboardMapper
             OnPropertyChanged("MappingPairs");
         }
 
-        public void DeleteMappingPair(int oriVkCode)
+        /// <summary>
+        /// delete a mapping pair
+        /// </summary>
+        /// <param name="index">the index of this mapping pair</param>
+        public void DeleteMappingPair(int index)
         {
-            for (int i = 0; i < this.mappingPairList.Count; i++)
+            if (this.mappingPairList.Count > index)
             {
-                if (this.mappingPairList[i].OriginalVkCode == oriVkCode)
-                {
-                    this.mappingPairList.RemoveAt(i);
-                    this.mappingDict.Remove(oriVkCode);
-                    OnPropertyChanged("MappingPairs");
-                    return;
-                }
+                this.mappingDict.Remove(this.mappingPairList[index].OriginalVkCode);
+                this.mappingPairList.RemoveAt(index);
+                OnPropertyChanged("MappingPairs");
             }
+        }
+
+
+        /// <summary>
+        /// remove all the mapping pairs
+        /// </summary>
+        public void ClearMappingPairs()
+        {
+            this.mappingPairList.Clear();
+            this.mappingDict.Clear();
+            OnPropertyChanged("MappingPairs");
         }
 
         public void OnPropertyChanged(String name)
@@ -126,6 +137,28 @@ namespace KeyboardMapper
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        /// <summary>
+        /// return a copy of mapping pair with specific index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public MappingPairType GetMappingPair(int index)
+        {
+            if (this.mappingPairList.Count > index)
+            {
+                //copy the mapping pair, do not just return the reference
+                return new MappingPairType
+                    {
+                        OriginalVkCode = this.mappingPairList[index].OriginalVkCode,
+                        MappingVkCode = this.mappingPairList[index].MappingVkCode
+                    };
+            }
+            else
+            {
+                return null;
             }
         }
         public List<MappingPairType> MappingPairs

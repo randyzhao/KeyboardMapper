@@ -59,6 +59,37 @@ namespace KeyboardMapper
             base.OnClosed(e);
             Application.Current.Shutdown();
         }
+
+        private void clearButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.keyboardHooker.ClearMappingPairs();
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = this.mappingPairListView.SelectedIndex;
+            
+            //delete the pair that users have selected
+            if (index != -1)
+            {
+                this.keyboardHooker.DeleteMappingPair(index);
+            }
+        }
+
+        private void editButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = this.mappingPairListView.SelectedIndex;
+            if (index != -1)
+            {
+                MappingPairType mappingPair = this.keyboardHooker.GetMappingPair(index);
+                this.addWin.Init(mappingPair);
+                this.addWin.ShowDialog();
+                if (this.addWin.ClickConfirm)
+                {
+                    this.keyboardHooker.UpdateMappingPair(this.addWin.MappingPair);
+                }
+            }
+        }
     }
 
 }
