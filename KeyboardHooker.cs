@@ -9,110 +9,6 @@ namespace KeyboardMapper
 {
     public class KeyboardHooker : INotifyPropertyChanged
     {
-        public class MappingPairType : INotifyPropertyChanged
-        {
-            /// <summary>
-            /// Fired whenever a property changes.  Required for
-            /// INotifyPropertyChanged interface
-            /// </summary>
-            public event PropertyChangedEventHandler PropertyChanged;
-            private void OnPropertyChanged(String name)
-            {
-                PropertyChangedEventHandler handler = PropertyChanged;
-                if (handler != null)
-                {
-                    handler(this, new PropertyChangedEventArgs(name));
-                }
-            }
-
-            private int originalVkCode;
-            private int mappingVkCode;
-            public int OriginalVkCode
-            {
-                set
-                {
-                    this.originalVkCode = value;
-                    this.OnPropertyChanged("OriginalVkCode");
-                    this.OnPropertyChanged("OriginalKeyName");
-                }
-                get
-                {
-                    return this.originalVkCode;
-                }
-            }
-            public int MappingVkCode
-            {
-                set
-                {
-                    this.mappingVkCode = value;
-                    this.OnPropertyChanged("MappingKeyName");
-                    this.OnPropertyChanged("MappingVkCode");
-                }
-                get
-                {
-                    return this.mappingVkCode;
-                }
-            }
-            public String OriginalKeyName
-            {
-                get
-                {
-                    if (this.OriginalVkCode == 0)
-                    {
-                        return "None";
-                    }
-                    else
-                    {
-                        return KeyInterop.KeyFromVirtualKey(OriginalVkCode).ToString();
-                    }
-                }
-                set
-                {
-                    if (value == "None" || value == null)
-                    {
-                        this.OriginalVkCode = 0;
-                    }
-                    else
-                    {
-                        this.OriginalVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
-                    }
-                    this.OnPropertyChanged("OriginalKeyName");
-                }
-            }
-            public String MappingKeyName
-            {
-                get
-                {
-                    if (this.MappingVkCode == 0)
-                    {
-                        return "None";
-                    }
-                    else
-                    {
-                        return KeyInterop.KeyFromVirtualKey(MappingVkCode).ToString();
-                    }
-                }
-                set
-                {
-                    if (value == "None" || value == null)
-                    {
-                        this.MappingVkCode = 0;
-                    }
-                    else
-                    {
-                        this.MappingVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
-                    }
-                    this.OnPropertyChanged("MappingKeyName");
-                }
-            }
-            public MappingPairType()
-            {
-                this.OriginalVkCode = 0;
-                this.MappingVkCode = 0;
-            }
-        }
-        
-
         /// <summary>
         /// Fired whenever a property changes.  Required for
         /// INotifyPropertyChanged interface
@@ -124,8 +20,13 @@ namespace KeyboardMapper
         private const int WM_KEYUP = 0x0101;
         private IntPtr hookID = IntPtr.Zero;
 
-        //key is original key virtual code
-        //value is mapping key virtual code
+        /// <summary>
+        /// stores the mapping pair in order
+        /// </summary>
+        private List<MappingPairType> mappingPairList = new List<MappingPairType>();
+        /// <summary>
+        /// stores the mapping pair for fast lookup in the hook callback
+        /// </summary>
         private Dictionary<int, int> mappingDict = new Dictionary<int, int>();
 
         //whether the keyboard mapping function is on
@@ -180,19 +81,42 @@ namespace KeyboardMapper
         }
 
 
-        //add a mapping pair
-        public void AddMappingPair(int oriVkCode, int mappingVkCode)
+        /// <summary>
+        /// add or update a mapping pair in the mapping list
+        /// </summary>
+        /// <param name="oriVkCode"></param>
+        /// <param name="mappingVkCode"></param>
+        public void UpdateMappingPair(MappingPairType mappingPair)
         {
-            this.mappingDict[oriVkCode] = mappingVkCode;
+            Boolean exist = false;
+            for (int i = 0; i < this.mappingPairList.Count; i++)
+            {
+                if (this.mappingPairList[i].OriginalVkCode == mappingPair.OriginalVkCode)
+                {
+                    this.mappingPairList[i] = mappingPair;
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist)
+            {
+                this.mappingPairList.Add(mappingPair);
+            }
+            this.mappingDict[mappingPair.OriginalVkCode] = mappingPair.MappingVkCode;
             OnPropertyChanged("MappingPairs");
         }
 
         public void DeleteMappingPair(int oriVkCode)
         {
-            if (this.mappingDict.ContainsKey(oriVkCode))
+            for (int i = 0; i < this.mappingPairList.Count; i++)
             {
-                this.mappingDict.Remove(oriVkCode);
-                OnPropertyChanged("MappingPairs");
+                if (this.mappingPairList[i].OriginalVkCode == oriVkCode)
+                {
+                    this.mappingPairList.RemoveAt(i);
+                    this.mappingDict.Remove(oriVkCode);
+                    OnPropertyChanged("MappingPairs");
+                    return;
+                }
             }
         }
 
@@ -208,16 +132,7 @@ namespace KeyboardMapper
         {
             get
             {
-                var output = new List<MappingPairType>();
-                foreach (var k in this.mappingDict.Keys)
-                {
-                    output.Add(new MappingPairType
-                        {
-                            OriginalVkCode = k,
-                            MappingVkCode = this.mappingDict[k]
-                        });
-                }
-                return output;
+                return this.mappingPairList;
             }
         }
 

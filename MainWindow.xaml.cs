@@ -20,7 +20,7 @@ namespace KeyboardMapper
     /// </summary>
     public partial class MainWindow : Window
     {
-        private KeyboardHooker kh = new KeyboardHooker();
+        private KeyboardHooker keyboardHooker = new KeyboardHooker();
         private AddMappingWindow addWin = new AddMappingWindow();
         public void handleHookEvent(string msg)
         {
@@ -30,24 +30,34 @@ namespace KeyboardMapper
         public MainWindow()
         {
             InitializeComponent();
-            kh.HookEvent += new KeyboardHooker.HookEventHandler(this.handleHookEvent);
-            this.mappingPairListView.DataContext = kh;
+            keyboardHooker.HookEvent += new KeyboardHooker.HookEventHandler(this.handleHookEvent);
+            this.mappingPairListView.DataContext = keyboardHooker;
 
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            this.addWin.Show();
+            this.addWin.Init(null);
+            this.addWin.ShowDialog();
+            if (this.addWin.ClickConfirm)
+            {
+                this.keyboardHooker.UpdateMappingPair(this.addWin.MappingPair);
+            }
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            this.kh.MappingOn = true;
+            this.keyboardHooker.MappingOn = true;
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
-            this.kh.MappingOn = false;
+            this.keyboardHooker.MappingOn = false;
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Application.Current.Shutdown();
         }
     }
 #region Converters
@@ -61,9 +71,10 @@ namespace KeyboardMapper
             return k.ToString();
         }
         public object ConvertBack(object value, Type targetType,
-            object parameter, CultureInfo culture)
+            object parameter, CultureInfo culture)   
         {
             return null;
+
         }
     }
 

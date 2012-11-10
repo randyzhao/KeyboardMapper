@@ -28,23 +28,17 @@ namespace KeyboardMapper
             }
             this.oriComboBox.SelectedIndex = 0;
             this.mappingComboBox.SelectedIndex = 0;
-            this.MappingPair = new KeyboardHooker.MappingPairType();
+            this.MappingPair = new MappingPairType();
             this.DataContext = this.MappingPair;
-          //  this.oriComboBox.SelectionChanged += new SelectionChangedEventHandler
-          //      (this.OnOriComboBoxSelectionChanged);
-          //  this.mappingComboBox.SelectionChanged += new SelectionChangedEventHandler
-          //      (this.OnMappingComboBoxSelectionChanged);
 
         }
 
-        public void OnOriComboBoxSelectionChanged(object sender, SelectionChangedEventArgs args)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            this.MappingPair.OriginalKeyName = (String)this.oriComboBox.SelectedValue;
-        }
-
-        public void OnMappingComboBoxSelectionChanged(object sender, SelectionChangedEventArgs args)
-        {
-            this.MappingPair.MappingKeyName = (String)this.mappingComboBox.SelectedValue;
+            base.OnClosing(e);
+            e.Cancel = true;
+            this.ClickConfirm = false;
+            this.Hide();
         }
         public void SetOriVkCode(int vkcode)
         {
@@ -72,7 +66,7 @@ namespace KeyboardMapper
             }
         }
 
-        public KeyboardHooker.MappingPairType MappingPair
+        public MappingPairType MappingPair
         {
             set;
             get;
@@ -86,16 +80,39 @@ namespace KeyboardMapper
             get;
         }
 
+        /// <summary>
+        /// call this functio before call Show() in the main window
+        /// init the controllers to display right contents
+        /// </summary>
+        /// <param name="mappingPair">
+        /// null means adding a new MappingPair
+        /// not null means editing a existing pair
+        /// </param>
+        public void Init(MappingPairType mappingPair)
+        {
+            this.ClickConfirm = false;
+            if (mappingPair == null)
+            {
+                this.MappingPair = new MappingPairType();
+                this.Title = "新建";
+            }
+            else
+            {
+                this.MappingPair = mappingPair;
+                this.Title = "编辑";
+            }
+        }
+
         private void confirmButton_Click(object sender, RoutedEventArgs e)
         {
             this.ClickConfirm = true;
-            this.Close();
+            this.Hide();
         }
 
         private void cancleButton_Click(object sender, RoutedEventArgs e)
         {
             this.ClickConfirm = false;
-            this.Close();
+            this.Hide();
         }
 
  
