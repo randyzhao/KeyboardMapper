@@ -60,23 +60,5 @@ namespace KeyboardMapper
             Application.Current.Shutdown();
         }
     }
-#region Converters
-    [ValueConversion(typeof(Int32), typeof(String))]
-    public class KeyNameConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType,
-            object parameter, CultureInfo culture)
-        {
-            Key k = KeyInterop.KeyFromVirtualKey((int)value);
-            return k.ToString();
-        }
-        public object ConvertBack(object value, Type targetType,
-            object parameter, CultureInfo culture)   
-        {
-            return null;
 
-        }
-    }
-
-#endregion
 }

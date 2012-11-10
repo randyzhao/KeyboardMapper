@@ -101,6 +101,9 @@ namespace KeyboardMapper
                 this.MappingPair = mappingPair;
                 this.Title = "编辑";
             }
+            //do not forget this sentence
+            //as the mappingpair is changing, so remember to change the data context
+            this.DataContext = this.MappingPair;
         }
 
         private void confirmButton_Click(object sender, RoutedEventArgs e)

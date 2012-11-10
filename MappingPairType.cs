@@ -31,7 +31,6 @@ namespace KeyboardMapper
             {
                 this.originalVkCode = value;
                 this.OnPropertyChanged("OriginalVkCode");
-                this.OnPropertyChanged("OriginalKeyName");
             }
             get
             {
@@ -43,7 +42,6 @@ namespace KeyboardMapper
             set
             {
                 this.mappingVkCode = value;
-                this.OnPropertyChanged("MappingKeyName");
                 this.OnPropertyChanged("MappingVkCode");
             }
             get
@@ -64,18 +62,7 @@ namespace KeyboardMapper
                     return KeyInterop.KeyFromVirtualKey(OriginalVkCode).ToString();
                 }
             }
-            set
-            {
-                if (value == "None" || value == null)
-                {
-                    this.OriginalVkCode = 0;
-                }
-                else
-                {
-                    this.OriginalVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
-                }
-                this.OnPropertyChanged("OriginalKeyName");
-            }
+            
         }
         public String MappingKeyName
         {
@@ -90,18 +77,7 @@ namespace KeyboardMapper
                     return KeyInterop.KeyFromVirtualKey(MappingVkCode).ToString();
                 }
             }
-            set
-            {
-                if (value == "None" || value == null)
-                {
-                    this.MappingVkCode = 0;
-                }
-                else
-                {
-                    this.MappingVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
-                }
-                this.OnPropertyChanged("MappingKeyName");
-            }
+            
         }
         public MappingPairType()
         {
