@@ -30,10 +30,10 @@ namespace KeyboardMapper
             this.mappingComboBox.SelectedIndex = 0;
             this.MappingPair = new KeyboardHooker.MappingPairType();
             this.DataContext = this.MappingPair;
-            this.oriComboBox.SelectionChanged += new SelectionChangedEventHandler
-                (this.OnOriComboBoxSelectionChanged);
-            this.mappingComboBox.SelectionChanged += new SelectionChangedEventHandler
-                (this.OnMappingComboBoxSelectionChanged);
+          //  this.oriComboBox.SelectionChanged += new SelectionChangedEventHandler
+          //      (this.OnOriComboBoxSelectionChanged);
+          //  this.mappingComboBox.SelectionChanged += new SelectionChangedEventHandler
+          //      (this.OnMappingComboBoxSelectionChanged);
 
         }
 

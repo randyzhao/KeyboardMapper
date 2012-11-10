@@ -77,7 +77,6 @@ namespace KeyboardMapper
                         this.OriginalVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
                     }
                     this.OnPropertyChanged("OriginalKeyName");
-                    this.OnPropertyChanged("OriginalVkCode");
                 }
             }
             public String MappingKeyName
@@ -104,7 +103,6 @@ namespace KeyboardMapper
                         this.MappingVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
                     }
                     this.OnPropertyChanged("MappingKeyName");
-                    this.OnPropertyChanged("MappingVkCode");
                 }
             }
             public MappingPairType()
