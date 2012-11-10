@@ -26,6 +26,8 @@ namespace KeyboardMapper
                 this.oriComboBox.Items.Add(name);
                 this.mappingComboBox.Items.Add(name);
             }
+            this.oriComboBox.SelectedIndex = 0;
+            this.mappingComboBox.SelectedIndex = 0;
             this.MappingPair = new KeyboardHooker.MappingPairType();
             this.DataContext = this.MappingPair;
             this.oriComboBox.SelectionChanged += new SelectionChangedEventHandler

@@ -4,14 +4,16 @@
         Title="编辑" Height="210" Width="407">
     <Grid>
         <Label Content="原值:" Height="28" HorizontalAlignment="Left" Margin="21,12,0,0" Name="label1" VerticalAlignment="Top" />
-        <ComboBox Height="23" Name="oriComboBox" HorizontalAlignment="Left" Margin="64,12,0,0" VerticalAlignment="Top" Width="120" />
+        <ComboBox Height="23" Name="oriComboBox" HorizontalAlignment="Left" Margin="64,12,0,0" VerticalAlignment="Top" Width="120"
+                  />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="201,14,0,0" Name="oriVkCodeTextBox" VerticalAlignment="Top" Width="63" 
                  Text="{Binding OriginalVkCode, Mode=TwoWay}"/>
         <Button Content="捕捉按键" Height="23" HorizontalAlignment="Left" Margin="284,12,0,0" Name="button1" VerticalAlignment="Top" Width="75" />
         <Label Content="原值:" Height="28" HorizontalAlignment="Left" Margin="21,58,0,0" Name="label2" VerticalAlignment="Top" />
-        <ComboBox Height="23" Name="mappingComboBox" HorizontalAlignment="Left" Margin="64,58,0,0" VerticalAlignment="Top" Width="120" />
+        <ComboBox Height="23" Name="mappingComboBox" HorizontalAlignment="Left" Margin="64,58,0,0" VerticalAlignment="Top" Width="120"
+               SelectedValue="{Binding MappingKeyName}"  />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="201,60,0,0" Name="mappingVkCodeTextBox" VerticalAlignment="Top" Width="63"
-        Text="{Binding OriginalVkCode, Mode=TwoWay}" />
+        Text="{Binding MappingVkCode, Mode=TwoWay}" />
         <Button Content="捕捉按键" Height="23" HorizontalAlignment="Left" Margin="284,58,0,0" Name="captureOriKeyButton" VerticalAlignment="Top" Width="75" />
         <Button Content="取消捕捉" Height="23" HorizontalAlignment="Left" Margin="284,97,0,0" Name="captureMappingKeyButton" VerticalAlignment="Top" Width="75" />
         <Button Content="确认" Height="23" HorizontalAlignment="Left" Margin="38,136,0,0" Name="confirmButton" VerticalAlignment="Top" Width="75" Click="confirmButton_Click" />

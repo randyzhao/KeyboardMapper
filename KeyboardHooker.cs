@@ -57,11 +57,25 @@ namespace KeyboardMapper
             {
                 get
                 {
-                    return KeyInterop.KeyFromVirtualKey(OriginalVkCode).ToString();
+                    if (this.OriginalVkCode == 0)
+                    {
+                        return "None";
+                    }
+                    else
+                    {
+                        return KeyInterop.KeyFromVirtualKey(OriginalVkCode).ToString();
+                    }
                 }
                 set
                 {
-                    this.OriginalVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
+                    if (value == "None" || value == null)
+                    {
+                        this.OriginalVkCode = 0;
+                    }
+                    else
+                    {
+                        this.OriginalVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
+                    }
                     this.OnPropertyChanged("OriginalKeyName");
                     this.OnPropertyChanged("OriginalVkCode");
                 }
@@ -70,11 +84,25 @@ namespace KeyboardMapper
             {
                 get
                 {
-                    return KeyInterop.KeyFromVirtualKey(MappingVkCode).ToString();
+                    if (this.MappingVkCode == 0)
+                    {
+                        return "None";
+                    }
+                    else
+                    {
+                        return KeyInterop.KeyFromVirtualKey(MappingVkCode).ToString();
+                    }
                 }
                 set
                 {
-                    this.MappingVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
+                    if (value == "None" || value == null)
+                    {
+                        this.MappingVkCode = 0;
+                    }
+                    else
+                    {
+                        this.MappingVkCode = KeyInterop.VirtualKeyFromKey((Key)Enum.Parse(typeof(Key), value));
+                    }
                     this.OnPropertyChanged("MappingKeyName");
                     this.OnPropertyChanged("MappingVkCode");
                 }
